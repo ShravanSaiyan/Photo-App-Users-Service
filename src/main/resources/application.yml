@@ -1,0 +1,73 @@
+server:
+  port: ${PORT:0}
+spring:
+  sleuth:
+    sampler:
+      probability: 1
+  zipkin:
+    base-url: http://localhost:9411
+    sender:
+      type: web
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  jpa:
+    generate-ddl: true
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+  hibernate:
+     ddl-auto: update
+
+  application:
+    name: users-ms
+  devtools:
+    restart:
+      enabled: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/test
+    username: root
+    password: toor
+eureka:
+  client:
+    serviceUrl:
+      defaultZone:  http://localhost:8010/eureka
+  instance:
+    lease-renewal-interval-in-seconds: 1
+    lease-expiration-duration-in-seconds: 2
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+gateway:
+  ip:
+    192.168.137.1
+
+token:
+  expiration_time: 864000000  # 10 days
+  secret: rgro133ojijn355
+login:
+  url:
+    path: /users/login
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - mappings
+logging:
+    file:
+      path: .
+      name: users-ms.log
+    level:
+      com:
+        shravan:
+          api:
+            users:
+              client:
+                AlbumsClient: DEBUG
+
+feign:
+  hystrix:
+    enabled: true
+
+
